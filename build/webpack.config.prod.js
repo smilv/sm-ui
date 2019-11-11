@@ -1,10 +1,24 @@
-var path = require("path");
+const fs = require("fs");
+const path = require("path");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const rootDir = path.resolve(__dirname, "../");
+const packagesDir = "packages";
+const cModuleNames = fs.readdirSync(path.resolve(packagesDir));
+
+const cModuleMap = cModuleNames.reduce((prev, name) => {
+    prev[name] = path.join(rootDir, `${packagesDir}/${name}/index.jsx`);
+    return prev;
+}, {});
+
+console.log(cModuleMap);
 
 module.exports = {
-    entry: "./packages/index.js",
+    mode: "development",
+    entry: { index: path.resolve(__dirname, "../index.js"), ...cModuleMap },
     output: {
-        path: path.resolve(__dirname, "lib"),
-        filename: "sm-ui.js",
+        path: path.resolve(__dirname, "../lib"),
+        filename: "[name]/index.js",
         library: "sm-ui",
         libraryTarget: "umd",
         publicPath: "/"
@@ -16,7 +30,18 @@ module.exports = {
         }
     },
     externals: {
-        react: "React"
+        react: {
+            root: "React",
+            commonjs2: "react",
+            commonjs: "react",
+            amd: "react"
+        },
+        "react-dom": {
+            root: "ReactDOM",
+            commonjs2: "react-dom",
+            commonjs: "react-dom",
+            amd: "react-dom"
+        }
     },
     module: {
         rules: [
