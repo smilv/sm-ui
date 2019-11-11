@@ -10,7 +10,8 @@
         "url": "git+https://github.com/smilv/sm-ui.git"
     },
     "files": [
-        "lib"
+        "lib",
+        "dist"
     ],
     "license": "ISC",
     "bugs": {
