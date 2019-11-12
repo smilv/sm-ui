@@ -11,20 +11,18 @@ const cModuleMap = cModuleNames.reduce((prev, name) => {
     return prev;
 }, {});
 
-console.log(cModuleMap);
-
 module.exports = {
     mode: "development",
-    entry: { index: path.resolve(__dirname, "../index.js"), ...cModuleMap },
+    entry: path.resolve(__dirname, "../packages/index.js"),
     output: {
-        path: path.resolve(__dirname, "../lib"),
-        filename: "[name]/index.js",
+        path: path.resolve(__dirname, "../dist"),
+        filename: "sm-ui.js",
         library: "sm-ui",
         libraryTarget: "umd",
         publicPath: "/"
     },
     resolve: {
-        extensions: [".js", ".jsx", ".json"],
+        extensions: [".js", ".jsx"],
         alias: {
             "@": path.resolve(__dirname, "../packages")
         }
@@ -59,6 +57,9 @@ module.exports = {
                             modules: true,
                             localIdentName: "[folder]__[local]"
                         }
+                    },
+                    {
+                        loader: "postcss-loader"
                     }
                 ]
             }
@@ -67,7 +68,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: "[name]/style/index.css"
+            filename: "sm-ui.css"
         })
     ]
 };
