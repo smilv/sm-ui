@@ -6,7 +6,7 @@ import "./style/index.css";
 
 class Button extends Component() {
     render() {
-        return <div>button</div>;
+        return <div className="button">button</div>;
     }
 }
 

@@ -13,7 +13,7 @@ const cModuleMap = cModuleNames.reduce((prev, name) => {
 
 module.exports = {
     mode: "development",
-    entry: path.resolve(__dirname, "../packages/index.js"),
+    entry: "./packages/index.js",
     output: {
         path: path.resolve(__dirname, "../dist"),
         filename: "sm-ui.js",
@@ -45,7 +45,8 @@ module.exports = {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                loader: "babel-loader"
+                loader: "babel-loader",
+                exclude: /node_modules/
             },
             {
                 test: /\.css$/,
@@ -55,7 +56,7 @@ module.exports = {
                         loader: "css-loader",
                         options: {
                             modules: true,
-                            localIdentName: "[folder]__[local]"
+                            localIdentName: "[folder]__[local]___[hash:base64:5]"
                         }
                     },
                     {
